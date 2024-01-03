@@ -50,6 +50,18 @@ module Enumerable
         none
       end
 
+      def my_any value = nil
+        any = false 
+        if value != nil
+          self.size.times{|index| any = true if value === self[index]}
+        elsif block_given?
+          self.size.times{|index| any = true if yield self[index]}
+        else 
+          self.size.times{|index| any = true unless self[index] == false || self[index] == nil}
+        end
+        any
+      end
+
 end
 
 num = [1,2,3,4,5,6,7,8,9,10]
@@ -71,3 +83,6 @@ p num.my_count
 puts "\n"
 puts "my_none"
 p num.my_none{|value| value %11 == 0}
+puts "\n"
+puts"my_any"
+p num.my_any{|value| value %2 == 0}
