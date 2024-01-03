@@ -37,6 +37,19 @@ module Enumerable
         self.size.times{|index| count += 1 if value == self[index]}
         self.count
       end
+
+      def my_none value = nil
+        none = true
+        if  value != nil 
+          self.size.times{|index| none = false if value === self[index]}
+        elsif block_given?
+          self.size.times{|index| none = false if yield self[index]}
+        else
+          self.size.times{|index| none = false if self[index]}
+        end
+        none
+      end
+
 end
 
 num = [1,2,3,4,5,6,7,8,9,10]
@@ -47,11 +60,14 @@ puts "my_each_with_index"
 num.my_each_with_index {|i,j| p "#{j} : #{i}"}
 puts "\n"
 puts "my_all"
-num.my_all?(String)
-num.my_all?(Numeric)
+p num.my_all?(String)
+p num.my_all?(Numeric)
 puts "\n"
 puts "my_select"
 p num.my_select{|value| value %3 == 0}
 puts "\n"
 puts "my_count"
 p num.my_count
+puts "\n"
+puts "my_none"
+p num.my_none{|value| value %11 == 0}
