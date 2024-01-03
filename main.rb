@@ -25,6 +25,12 @@ module Enumerable
         all_result
       end
 
+      def my_select
+        self.is_a?(Array)
+        result = []
+        self.size.times{|index| result << self[index] if yield self[index]}
+        result
+      end
 end
 
 num = [1,2,3,4,5,6,7,8,9,10]
@@ -37,3 +43,6 @@ puts "\n"
 puts "my_all"
 num.my_all?(String)
 num.my_all?(Numeric)
+puts "\n"
+puts "my_select"
+p num.my_select{|value| value %3 == 0}
