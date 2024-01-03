@@ -31,6 +31,12 @@ module Enumerable
         self.size.times{|index| result << self[index] if yield self[index]}
         result
       end
+
+      def my_count value = nil
+        count = 0
+        self.size.times{|index| count += 1 if value == self[index]}
+        self.count
+      end
 end
 
 num = [1,2,3,4,5,6,7,8,9,10]
@@ -46,3 +52,6 @@ num.my_all?(Numeric)
 puts "\n"
 puts "my_select"
 p num.my_select{|value| value %3 == 0}
+puts "\n"
+puts "my_count"
+p num.my_count
